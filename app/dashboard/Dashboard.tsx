@@ -38,13 +38,34 @@ function Clock() {
 }
 
 ///TASKBAR
-const num: number = 5;
-const tabs = ["Xbox Live Party", "Friends", "Mail","Activity"]
+const tabs = ["Xbox Live Party", 
+    "Friends", 
+    "Mail",
+    "Activity"]
+
+//Views 
+
+const views =
+    {
+    "Xbox Live Party": <PartyView />,
+    "Friends": <FriendsView />,
+    "Mail": <MailView />,
+    "Activity": <ActivityView />
+    }
+
+
+function PartyView(){}
+function FriendsView(){}
+function MailView(){}
+function ActivityView(){}
 
 //CONFIGURE PAGES
 
-function Taskbar(){
-    const [activeTab, setActiveTab] = useState("Party")
+export default function Dashboard() {
+
+
+    function Taskbar(activeTab, onChange(tab)){
+    const [activeTab, setActiveTab] = useState("Xbox Live Party")
 
     return (
         <div className="flex bg-[#F1F1FD] overflow-hidden">
@@ -55,7 +76,7 @@ function Taskbar(){
                     className={
                         `flex-1 truncate px-4 py-2 text-center transition-colors ` +
                         (activeTab === tab
-                            ? "flex-[4] bg-[#F8F7FF] text-black font-bold"
+                            ? "flex-[4] bg-[#F8F7FF] text-black"
                             : "flex-1 bg-[#49586D] text-white cursor-pointer"
                         )
                     }
@@ -66,14 +87,9 @@ function Taskbar(){
         </div>
     )
 }
-
-function PartyView(){
-
-}
-
-export default function Dashboard() {
     return (
         <div className="flex flex-col justify-center text-white">
+
             {/* profile pic + name on the left */}
             <div className="flex gap-50 ">
                 <span>Community</span>
@@ -81,14 +97,17 @@ export default function Dashboard() {
                 <Clock/>
                 {/* clock on the right */}
             </div>
+
             <div className="w-full max-w-3xl bg-[#F1F1FD]">
+
                 {/* Xbox UI header bar */}
                 <div className="">
                     <Taskbar/>
                 </div>
+
                 <div className="mx-auto w-full max-w-xl rounded-xl bg-[#F8F7FF] p-6 shadow-sm">
                     <div className="text-gray-800">
-
+                        {views[activeTab]}
                     </div>
                 </div>
             </div>
