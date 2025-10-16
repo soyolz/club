@@ -38,36 +38,39 @@ function Clock() {
 }
 
 ///TASKBAR
-const tabs = ["Xbox Live Party", 
-    "Friends", 
+const tabs = ["Xbox Live Party",
+    "Friends",
     "Mail",
     "Activity"]
 
-//Views 
+//Views
 
-const views =
-    {
-    "Xbox Live Party": <PartyView />,
-    "Friends": <FriendsView />,
-    "Mail": <MailView />,
-    "Activity": <ActivityView />
-    }
+///Views
+
+function PartyView(){
 
 
-function PartyView(){}
-function FriendsView(){}
-function MailView(){}
-function ActivityView(){}
+
+    return <div className="grid">
+
+    </div>;
+}
+
+function FriendsView(){ return <div>Friends view</div>; }
+
+function MailView(){ return <div>Mail view</div>; }
+
+function ActivityView(){ return <div>Activity view</div>; }
 
 //CONFIGURE PAGES
 
 export default function Dashboard() {
 
+    const [activeTab, setActiveTab] = useState("Xbox Live Party");
 
-    function Taskbar(activeTab, onChange(tab)){
-    const [activeTab, setActiveTab] = useState("Xbox Live Party")
+    function Taskbar({ activeTab, onChange }: { activeTab: string; onChange: (tab: string) => void }) {
 
-    return (
+        return (
         <div className="flex bg-[#F1F1FD] overflow-hidden">
             {tabs.map((tab) => (
                 <button
@@ -87,6 +90,15 @@ export default function Dashboard() {
         </div>
     )
 }
+
+        const viewsMap: Record<string, JSX.Element> = {
+            "Xbox Live Party": <PartyView />,
+            Friends: <FriendsView />,
+            Mail: <MailView />,
+            Activity: <ActivityView />,
+        };
+
+
     return (
         <div className="flex flex-col justify-center text-white">
 
@@ -102,12 +114,12 @@ export default function Dashboard() {
 
                 {/* Xbox UI header bar */}
                 <div className="">
-                    <Taskbar/>
+                    <Taskbar activeTab={activeTab} onChange={setActiveTab} />
                 </div>
 
                 <div className="mx-auto w-full max-w-xl rounded-xl bg-[#F8F7FF] p-6 shadow-sm">
                     <div className="text-gray-800">
-                        {views[activeTab]}
+                        {viewsMap[activeTab] ?? null}
                     </div>
                 </div>
             </div>
