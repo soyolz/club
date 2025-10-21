@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect} from "react"
+import { useState, useEffect, JSX} from "react"
 
 
 ///CLOCK
@@ -43,20 +43,57 @@ const tabs = ["Xbox Live Party",
     "Mail",
     "Activity"]
 
-//Views
-
-///Views
+/// Functions for Tabs Views
 
 function PartyView(){
+    const [activeOption, setActiveOption] = useState<string>("Invite Players")
 
+    type Option = {label:string; view?: JSX.Element};
+    const options: Option[] = [ 
+        {label:"Invite Players"},
+        {label:"Invite To Game"}
+    ]
+    // const options = ["Invite Players", "Invite to Game", "Party Options: Part Chat"]
 
+    function PartyControl({ 
+        activeOption, onChange 
+    }: { 
+        active0ption: string; 
+        onChange: (options: string) => void 
+    })  {
 
-    return <div className="grid">
+        return(
+            <div className="grid divide-y divide-gray-200">
+            {options.map((option) =>( //the array's in the options array are now the parameter option
+                <button 
+                key={option.label} //the id of key is option
+                onClick={() => {
+                    setActiveOption(option.label);
+                    console.log(option.label);
+                }}
+                className={
+                    (activeOption == option.label
+                    ? "bg-[#49586D] text-white cursor-pointer"
+                    : "bg-[#F8F7FF] text-black"
+                )
+            }
+        >
+                    {option.label}
+                </button>
+            ))}
+            </div>
+        )
+    }
 
-    </div>;
+    return(
+        <div>
+            <PartyControl active0ption={activeOption} onChange={setActiveOption} />
+        </div>
+    )
 }
 
-function FriendsView(){ return <div>Friends view</div>; }
+
+function FriendsView(){ return <div className="text-green-400">Friends view</div>; }
 
 function MailView(){ return <div>Mail view</div>; }
 
@@ -67,14 +104,16 @@ function ActivityView(){ return <div>Activity view</div>; }
 export default function Dashboard() {
 
     const [activeTab, setActiveTab] = useState("Xbox Live Party");
+      //chaning the ui
 
     function Taskbar({ activeTab, onChange }: { activeTab: string; onChange: (tab: string) => void }) {
-
+        console.log("Clicked");
         return (
+        
         <div className="flex bg-[#F1F1FD] overflow-hidden">
             {tabs.map((tab) => (
                 <button
-                    key={tab}
+                    key={tab} //name
                     onClick={() => setActiveTab(tab)}
                     className={
                         `flex-1 truncate px-4 py-2 text-center transition-colors ` +
