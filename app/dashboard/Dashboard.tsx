@@ -51,7 +51,8 @@ function PartyView(){
     type Option = {label:string; view?: JSX.Element};
     const options: Option[] = [ 
         {label:"Invite Players"},
-        {label:"Invite To Game"}
+        {label:"Invite To Game"},
+        {label:"Party Chat"}
     ]
     // const options = ["Invite Players", "Invite to Game", "Party Options: Part Chat"]
 
